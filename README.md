@@ -1,2 +1,2 @@
 # go-bark
-Bark client libary
+go client library for [Bark Server](https://github.com/Finb/bark-server)

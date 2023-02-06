@@ -4,6 +4,11 @@ go client library for [Bark Server](https://github.com/Finb/bark-server)
 
 # Documentation
 
+## Install
+```bash
+go get github.com/SealinGp/go-bark@latest
+```
+
 ## Basic Usage
 
 ```go

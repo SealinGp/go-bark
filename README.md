@@ -24,12 +24,12 @@ go client library for [Bark Server](https://github.com/Finb/bark-server)
   })
 
   //sound
-  err = barkCli.Bark(context.Background(),&gobark.BarkRequest{
-    	BarkRequestOptions: BarkRequestOptions{
-        Sound: "minuet"
-      },
-      Text: &gobark.Text{
-        Title: "xxx"
-      }
+  err = barkCli.Bark(ctx, &gobark.BarkRequest{
+    BarkRequestOptions: gobark.BarkRequestOptions{
+      Sound: "minuet",
+    },
+    Text: &gobark.Text{
+      Title: "推送铃声",
+    },
   })
 ```

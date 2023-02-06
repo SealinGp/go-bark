@@ -61,7 +61,7 @@ func (c *Client) check() error {
 }
 
 func (c *Client) Bark(ctx context.Context, req *BarkRequest) error {
-	httpReq, err := c.newReq(ctx)
+	httpReq, err := c.newReq(ctx, req.Key)
 	if err != nil {
 		c.fLog("[E] new req failed. err:%v", err)
 		return err
@@ -103,8 +103,8 @@ func (c *Client) do(ctx context.Context, httpReq *http.Request, resp ...Response
 	return nil
 }
 
-func (c *Client) newReq(ctx context.Context) (*http.Request, error) {
-	basicURL, err := c.basicURL()
+func (c *Client) newReq(ctx context.Context, key string) (*http.Request, error) {
+	basicURL, err := c.basicURL(key)
 	if err != nil {
 		c.fLog("[E] get basic URL failed. err:%v", err)
 		return nil, err
@@ -123,14 +123,18 @@ func (c *Client) newReq(ctx context.Context) (*http.Request, error) {
 	return httpReq, nil
 }
 
-func (c *Client) basicURL() (string, error) {
+func (c *Client) basicURL(key string) (string, error) {
+	if key == "" {
+		key = c.key
+	}
+
 	u, err := url.Parse(c.addr)
 	if err != nil {
 		c.fLog("[E] parse addr failed. addr:%v, err:%v", c.addr, err)
 		return "", err
 	}
 
-	u.Path = fmt.Sprintf("/%v", c.key)
+	u.Path = fmt.Sprintf("/%v", key)
 	return u.String(), nil
 }
 

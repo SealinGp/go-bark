@@ -62,6 +62,7 @@ func (r *BarkRequest) setOpts(httpReq *http.Request) {
 
 func (r *Text) set(httpReq *http.Request) {
 	u := httpReq.URL
+	q := u.Query()
 	subjects := make([]string, 0, 2)
 	if r.Title != "" {
 		subjects = append(subjects, r.Title)
@@ -72,13 +73,15 @@ func (r *Text) set(httpReq *http.Request) {
 	}
 
 	if r.IsArchive {
-		u.Query().Set("isArchive", "1")
+		q.Set("isArchive", "1")
 	}
 
+	u.RawQuery = q.Encode()
 	u.Path += "/" + strings.Join(subjects, "/")
 }
 
 type BarkRequestOptions struct {
+	Key               string `json:"key,omitempty"`                //推送设备的key,默认client.Key
 	Sound             string `json:"sound,omitempty"`              //可在Bark App查看所有的铃声名
 	Icon              string `json:"icon,omitempty"`               //自定义推送图标,图标将替换默认Bark图标,会自动缓存在客户端,https://xxx/xx.jpg
 	Group             string `json:"group,omitempty"`              //消息分组名,同一个分组下的消息将会叠加显示

@@ -88,6 +88,10 @@ func (c *Client) do(ctx context.Context, httpReq *http.Request, resp ...Response
 		return err
 	}
 
+	if c.debug {
+		c.fLog("[D] resp body:%s", body)
+	}
+
 	if err = json.Unmarshal(body, r); err != nil {
 		return err
 	}
@@ -131,6 +135,9 @@ func (c *Client) basicURL() (string, error) {
 }
 
 func (c *Client) fLog(format string, a ...interface{}) {
-	l := fmt.Sprintf(format, a...)
+	newArgs := make([]interface{}, 0, len(a)+1)
+	newArgs = append(newArgs, a...)
+	newArgs = append(newArgs, "\n")
+	l := fmt.Sprintf(format, newArgs)
 	c.log.Write([]byte(l))
 }

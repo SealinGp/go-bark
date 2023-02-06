@@ -56,6 +56,8 @@ func (r *BarkRequest) setOpts(httpReq *http.Request) {
 	if r.Sound != "" {
 		q.Set("sound", r.Sound)
 	}
+
+	httpReq.URL.RawQuery = q.Encode()
 }
 
 func (r *Text) set(httpReq *http.Request) {

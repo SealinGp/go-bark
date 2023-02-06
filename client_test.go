@@ -16,27 +16,27 @@ func TestClient(t *testing.T) {
 		input         func() (*Client, error)
 		doAndValidate func(*Client, error) error
 	}{
-		// {
-		// 	name: "TextMsg",
-		// 	input: func() (*Client, error) {
-		// 		return NewClient(key)
-		// 	},
-		// 	doAndValidate: func(c *Client, err error) error {
-		// 		if err != nil {
-		// 			return err
-		// 		}
+		{
+			name: "TextMsg",
+			input: func() (*Client, error) {
+				return NewClient(key)
+			},
+			doAndValidate: func(c *Client, err error) error {
+				if err != nil {
+					return err
+				}
 
-		// 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		// 		defer cancel()
+				ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+				defer cancel()
 
-		// 		return c.Bark(ctx, &BarkRequest{
-		// 			Text: &Text{
-		// 				Title:   "title",
-		// 				Content: "content",
-		// 			},
-		// 		})
-		// 	},
-		// },
+				return c.Bark(ctx, &BarkRequest{
+					Text: &Text{
+						Title:   "title",
+						Content: "content",
+					},
+				})
+			},
+		},
 		{
 			name: "SoundMsg",
 			input: func() (*Client, error) {
